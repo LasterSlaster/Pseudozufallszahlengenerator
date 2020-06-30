@@ -39,13 +39,25 @@ public class Verwerfungsmethode implements Generator {
 	 */
 	private DoubleFunction g;
 
+	private DoubleFunction standartzufallszahlG;
 	
-	public Verwerfungsmethode(DoubleFunction F, DoubleFunction f, DoubleFunction G, DoubleFunction g) {
-		// TODO: set k so that f(x) <= k * g(x) für jedes x element der reelen Zahlen ???
+	private DoubleFunction zufallszahlG;
+	
+	public Verwerfungsmethode(
+			DoubleFunction F, 
+			DoubleFunction f, 
+			DoubleFunction G, 
+			DoubleFunction g, 
+			DoubleFunction standartzufallszahlG, 
+			DoubleFunction zufallszahlG, 
+			Double k) {
 		this.F = F;
 		this.f = f;
 		this.G = G;
 		this.g = g;
+		this.standartzufallszahlG = standartzufallszahlG;
+		this.zufallszahlG = zufallszahlG;
+		this.k = k;
 	}
 	
 	@Override
@@ -53,30 +65,13 @@ public class Verwerfungsmethode implements Generator {
 		Double x;
 		Double u;
 		do {
-			x = gVerteilteZufallszahl();
-			u = gleichförmigVerteilteZufallszahl();
-		} while ( !(u * k * g(x) < f(x)) );
+			x = (Double) zufallszahlG.apply(1d);
+			u = (Double) standartzufallszahlG.apply(1d);
+		} while ( !(u * k * ((Double) g.apply(x)) < ((Double) f.apply(x))) );
 		
 		// Valide Zufallszahl gefunden, welche der Verteilungsfunktion F genügt
 		return x;
 	}
 	
 	
-	/**
-	 * Erzeugt Zufallszahlen die der Verteilung G genügen
-	 * 
-	 * @return Zufallszahl
-	 */
-	public Double gVerteilteZufallszahl() {
-		
-	}
-	
-	/**
-	 * Erzeugt Standartzufallszahl(unabhängiger, auf [ 0 ; 1 ] {\displaystyle [0;1]} [0;1] gleichverteilter Zufallsvariablen) die der Verteilung G genügen
-	 * 
-	 * @return Standartzufallszahl
-	 */
-	public Double gleichförmigVerteilteZufallszahl() {
-		
-	}
 }

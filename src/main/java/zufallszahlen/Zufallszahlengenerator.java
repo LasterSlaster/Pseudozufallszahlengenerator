@@ -12,7 +12,10 @@ public class Zufallszahlengenerator {
 				Zufallszahlengenerator::verteilungsFunktionAnrufeFernsehabstimmung, 
 				Zufallszahlengenerator::dichteFunktionAnrufeFernsehabstimmung, 
 				Zufallszahlengenerator::hilfsverteilungsFunktion, 
-				Zufallszahlengenerator::dichteFunktionHilfsverteilungsfunktion);
+				Zufallszahlengenerator::dichteFunktionHilfsverteilungsfunktion,
+				Zufallszahlengenerator::gleichförmigVerteilteZufallszahl,
+				Zufallszahlengenerator::gVerteilteZufallszahl,
+				Zufallszahlengenerator.k);
 		StandartGenerator stdGen = new StandartGenerator();
 
 		Double zufallsvariableDerVerwerfungsmethode = vMethode.generate();
@@ -23,8 +26,10 @@ public class Zufallszahlengenerator {
 		
 	}
 	
+	public static final Double k = 1d; // TODO: Dieser Wert ist wahrscheinlich nicht korrekt und dient daher vorerst als Platzhalter
+	
 	/**
-	 * Verteilungsfunktion der eingehenden Anrufe bei der Fernsehabstimmungen nach https://de.wikibooks.org/wiki/Statistik:_Stetige_Zufallsvariablen#Beispiel:_Eingehende_Anrufe_bei_Fernsehabstimmungen
+	 * Verteilungsfunktion F der eingehenden Anrufe bei der Fernsehabstimmungen nach https://de.wikibooks.org/wiki/Statistik:_Stetige_Zufallsvariablen#Beispiel:_Eingehende_Anrufe_bei_Fernsehabstimmungen
 	 * 
 	 * @param x: Zufallsvariable. Parameter der Verteilungsfunktion. Gibt einen Zeitpunkt an zu dem zu erwartende Anrufe berechnet werden.
 	 * @return Anrufe zum Zeitpunkt x
@@ -46,7 +51,28 @@ public class Zufallszahlengenerator {
 	}
 	
 	/**
-	 * Dichtefunktion zur Verteilungsfunktion verteilungsFunktionAnrufeFernsehabstummung
+	 * Hilfsverteilungsfunktion G.
+	 * Berechnet über die Inversionsmethode für die Verteilungsfunktion F
+	 * 
+	 */
+	public static Double hilfsverteilungsFunktion(Double x) {
+		if ( x < 0d ) {
+
+			return 0d;
+
+		} else if (x >= 0d && x <= Math.log(1.5)) {
+
+			return 2d * Math.exp(x) - 2;
+
+		} else {
+
+			return 1d;
+
+		}
+	}
+
+	/**
+	 * Dichtefunktion f zur Verteilungsfunktion F(verteilungsFunktionAnrufeFernsehabstummung)
 	 * 
 	 * @param x
 	 * @return
@@ -68,30 +94,39 @@ public class Zufallszahlengenerator {
 	}
 	
 	/**
-	 * Hilfsverteilungsfunktion G.
-	 * Berechnet über die Inversionsmehtode
+	 * Dichtefunktion g der Hilfsverteilungsfunktion G(hilfsverteilungsfunktion())
 	 */
-	public static Double hilfsverteilungsFunktion(Double x) {
+	public static Double dichteFunktionHilfsverteilungsfunktion(Double x) {
 		if ( x < 0d ) {
-
+			
 			return 0d;
 
 		} else if (x >= 0d && x <= Math.log(1.5)) {
 
-			return 2d * Math.exp(x) - 2;
+			return 2 * Math.exp(x);
 
 		} else {
 
-			return 1d;
+			return 0d;
 
 		}
 	}
+
+	/**
+	 * Erzeugt Zufallszahlen die der Verteilung G genügen
+	 * 
+	 * @return Zufallszahl
+	 */
+	public static Double gVerteilteZufallszahl(Double x) {
+		return 0 + (Math.log(1.5) - 0) * Math.random();
+	}
 	
 	/**
-	 * Dichtefunktion g der Hilfsverteilungsfunktion G(hilfsverteilungsfunktion())
+	 * Erzeugt Standartzufallszahl(unabhängiger, auf [ 0 ; 1 ] {\displaystyle [0;1]} [0;1] gleichverteilter Zufallsvariablen) die der Verteilung G genügen
+	 * 
+	 * @return Standartzufallszahl
 	 */
-	public static Double dichteFunktionHilfsverteilungsfunktion(Double x) {
-		// TODO: Implement based on hilfsverteilungsFunktion()
-		return 1d; 
+	public static Double gleichförmigVerteilteZufallszahl(Double x) {
+		return 0 + (Math.log(1.5) - 0) * Math.random();
 	}
 }
