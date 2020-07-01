@@ -13,8 +13,8 @@ public class Zufallszahlengenerator {
 		StandartGenerator stdGen = new StandartGenerator(
 				Zufallszahlengenerator::verteilungsFunktionAnrufeFernsehabstimmung, 
 				Zufallszahlengenerator::zufallsZahl, 
-				0d, 
-				Math.log(1.5));
+				2d, 
+				2 * Math.E);
 
 		// Generiert Zufallszahlen mithilfe der Inversionsmethode
 		StandartGenerator stdGenInv = new StandartGenerator(
@@ -38,7 +38,7 @@ public class Zufallszahlengenerator {
 		// und dann DOkumentieren welche am besten war
 		// Gut bedeutet kurze Laufzeit und gleichmäßige Häufigkeitsverteilung, geringe Korrelation
 		Double zufallsvariableDerStdMethode = stdGen.generate();
-		Double zufallsvariableDerInvMethode = stdGenInv.generate();
+		Double zufallsvariableDerInvMethode = stdGenInv.generate();		
 		Double zufallsvariableDerVerwerfungsmethode = vMethode.generate();
 		
 		System.out.println("Zufallszahl der Standart Methode: " + zufallsvariableDerStdMethode);
