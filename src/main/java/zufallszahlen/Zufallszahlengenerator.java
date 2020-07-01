@@ -8,6 +8,22 @@ package zufallszahlen;
 public class Zufallszahlengenerator {
 
 	public static void main(String[] args) {
+
+		// Generiert Zufallszahlen basierend auf einer Verteilungsfunktion
+		StandartGenerator stdGen = new StandartGenerator(
+				Zufallszahlengenerator::verteilungsFunktionAnrufeFernsehabstimmung, 
+				Zufallszahlengenerator::zufallsZahl, 
+				0d, 
+				Math.log(1.5));
+
+		// Generiert Zufallszahlen mithilfe der Inversionsmethode
+		StandartGenerator stdGenInv = new StandartGenerator(
+				Zufallszahlengenerator::verteilungsFunktionAnrufeFernsehabstimmung, 
+				Zufallszahlengenerator::zufallsZahl, 
+				0d, 
+				Math.log(1.5));
+
+		// Generiert Zufallszahlen mithilfe der Verwerfungsmethode
 		Verwerfungsmethode vMethode = new Verwerfungsmethode(
 				Zufallszahlengenerator::verteilungsFunktionAnrufeFernsehabstimmung, 
 				Zufallszahlengenerator::dichteFunktionAnrufeFernsehabstimmung, 
@@ -16,13 +32,14 @@ public class Zufallszahlengenerator {
 				Zufallszahlengenerator::gleichförmigVerteilteZufallszahl,
 				Zufallszahlengenerator::gVerteilteZufallszahl,
 				Zufallszahlengenerator.k);
-		StandartGenerator stdGen = new StandartGenerator();
 
-		Double zufallsvariableDerVerwerfungsmethode = vMethode.generate();
 		Double zufallsvariableDerStdMethode = stdGen.generate();
+		Double zufallsvariableDerInvMethode = stdGenInv.generate();
+		Double zufallsvariableDerVerwerfungsmethode = vMethode.generate();
 		
-		System.out.println("Zufallszahl der Verwergungsmethode: " + zufallsvariableDerVerwerfungsmethode);
 		System.out.println("Zufallszahl der Standart Methode: " + zufallsvariableDerStdMethode);
+		System.out.println("Zufallszahl der Inversionsmethode: " + zufallsvariableDerInvMethode);
+		System.out.println("Zufallszahl der Verwergungsmethode: " + zufallsvariableDerVerwerfungsmethode);
 		
 	}
 	
@@ -110,6 +127,15 @@ public class Zufallszahlengenerator {
 			return 0d;
 
 		}
+	}
+
+	/**
+	 * Erzeugt Zufallszahlen 
+	 * 
+	 * @return Zufallszahl
+	 */
+	public static Double zufallsZahl(Double min, Double max) {
+		return min + (max - min) * Math.random();
 	}
 
 	/**

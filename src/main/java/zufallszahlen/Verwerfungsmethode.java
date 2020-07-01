@@ -22,34 +22,41 @@ public class Verwerfungsmethode implements Generator {
 	/**
 	 * Verteilungsfunktion der Verteilung, für die ZUfallszahlen erzeugt werden
 	 */
-	private DoubleFunction F;
+	private DoubleFunction<Double> F;
 	
 	/**
 	 * Dichtefunktion von F
 	 */
-	private DoubleFunction f;
+	private DoubleFunction<Double> f;
 
 	/**
 	 * Hilfsverteilungsfunktion für die Erzeugung von Zufallszahlen 
 	 */
-	private DoubleFunction G;
+	private DoubleFunction<Double> G;
 	
 	/**
 	 * Dichtefunktion von G
 	 */
-	private DoubleFunction g;
+	private DoubleFunction<Double> g;
 
-	private DoubleFunction standartzufallszahlG;
+	/**
+	 * Funktion zur Erzeugung von Standartzufallszahlen der Verteilung G
+	 */
+	private DoubleFunction<Double> standartzufallszahlG;
 	
-	private DoubleFunction zufallszahlG;
+	/**
+	 * Funktion zur Erzeugung von Zufallszahlen der Verteilung G
+	 */
+	private DoubleFunction<Double> zufallszahlG;
+
 	
 	public Verwerfungsmethode(
-			DoubleFunction F, 
-			DoubleFunction f, 
-			DoubleFunction G, 
-			DoubleFunction g, 
-			DoubleFunction standartzufallszahlG, 
-			DoubleFunction zufallszahlG, 
+			DoubleFunction<Double> F, 
+			DoubleFunction<Double> f, 
+			DoubleFunction<Double> G, 
+			DoubleFunction<Double> g, 
+			DoubleFunction<Double> standartzufallszahlG, 
+			DoubleFunction<Double> zufallszahlG, 
 			Double k) {
 		this.F = F;
 		this.f = f;
@@ -65,9 +72,9 @@ public class Verwerfungsmethode implements Generator {
 		Double x;
 		Double u;
 		do {
-			x = (Double) zufallszahlG.apply(1d);
-			u = (Double) standartzufallszahlG.apply(1d);
-		} while ( !(u * k * ((Double) g.apply(x)) < ((Double) f.apply(x))) );
+			x = zufallszahlG.apply(1d);
+			u = standartzufallszahlG.apply(1d);
+		} while ( !(u * k * g.apply(x) < f.apply(x)) );
 		
 		// Valide Zufallszahl gefunden, welche der Verteilungsfunktion F genügt
 		return x;
