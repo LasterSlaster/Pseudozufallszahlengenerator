@@ -33,6 +33,10 @@ public class Zufallszahlengenerator {
 				Zufallszahlengenerator::gVerteilteZufallszahl,
 				Zufallszahlengenerator.k);
 
+		// TODO: In mehreren Duchläufen die folgednen drei Methoden zu berechnung der Zufallszahlen durchlaufen lassen und für jeden Durchlauf je Methode die Laufzaufzeit, mean, stdDev, variance bestimmen
+		// z.B. in for/while loop ca 1000 mal
+		// und dann DOkumentieren welche am besten war
+		// Gut bedeutet kurze Laufzeit und gleichmäßige Häufigkeitsverteilung, geringe Korrelation
 		Double zufallsvariableDerStdMethode = stdGen.generate();
 		Double zufallsvariableDerInvMethode = stdGenInv.generate();
 		Double zufallsvariableDerVerwerfungsmethode = vMethode.generate();
@@ -42,6 +46,19 @@ public class Zufallszahlengenerator {
 		System.out.println("Zufallszahl der Verwergungsmethode: " + zufallsvariableDerVerwerfungsmethode);
 		
 	}
+	
+	/*
+	  TODO: Implementiere folgende Funktionen für die Auswertung
+	   	def mean[T: Numeric](xs: Iterable[T]): Double = xs.sum.toDouble / xs.size
+
+  		def variance[T: Numeric](xs: Iterable[T]): Double = {
+    		val avg = mean(xs)
+
+    		xs.map(_.toDouble).map(a => math.pow(a - avg, 2)).sum / xs.size
+  		}
+
+  		def stdDev[T: Numeric](xs: Iterable[T]): Double = math.sqrt(variance(xs))
+	 */
 	
 	public static final Double k = 1d; // TODO: Dieser Wert ist wahrscheinlich nicht korrekt und dient daher vorerst als Platzhalter
 	
